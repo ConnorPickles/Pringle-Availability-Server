@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+from scraper import GetAvailability
 
 async def hello(websocket, path):
     message = await websocket.recv()
@@ -12,7 +13,12 @@ async def hello(websocket, path):
         print('Message rejected\r\n')
         return
     
-    print('Request for availability recieved')
+    print('Request for availability recieved, fetching availability now...')
+    availability = GetAvailability()
+    response = 'availability'
+    for num in availability:
+        response += (' ' + num)
+    await websocket.send(response)
     return
 
 start_server = websockets.serve(hello, "192.168.1.9", 2520)
