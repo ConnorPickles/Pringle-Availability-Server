@@ -15,10 +15,16 @@ async def hello(websocket, path):
     
     print('Request for availability recieved, fetching availability now...')
     availability = GetAvailability()
+    if len(availability) < 1:
+        await websocket.send('Try again later')
+        print('\r\nError while scraping Camp Brain. Try again later.\r\n\r\n')
+        return
+
     response = 'availability'
     for num in availability:
         response += (' ' + num)
     await websocket.send(response)
+    print('\r\nResponse sent!\r\n\r\n')
     return
 
 start_server = websockets.serve(hello, "192.168.1.9", 2520)

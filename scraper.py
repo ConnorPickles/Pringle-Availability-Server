@@ -28,6 +28,7 @@ def GetAvailability():
     try:
         sleep(2)
         driver.find_element_by_id('dashboard-availabilitylink').click()
+        sleep(1)
         driver.find_element_by_class_name('btn.btn-link.dropdown-toggle').click()
         driver.find_element_by_xpath('//*[@title="OSC Fall 2019"]').click()
     except Exception:
